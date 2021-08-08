@@ -7,7 +7,7 @@ info:
 servers:
 - url: /
 paths:
-  /api/v1/article/{article_id}:
+  /api/v1/article/{article_id}/:
     get:
       summary: get article with comments
       parameters:
@@ -43,7 +43,7 @@ paths:
           description: article created
         "400":
           description: input validation failed
-  /api/v1/comment/{comment_id}:
+  /api/v1/comment/{comment_id}/:
     get:
       summary: get a comment tree
       description: get a comment tree starting from comment with specified id as root
@@ -101,7 +101,7 @@ components:
         comments:
           type: array
           items:
-            $ref: '#/components/schemas/CommentTree'
+            $ref: '#/components/schemas/Comment'
         published:
           type: string
           format: date-time
@@ -123,7 +123,7 @@ components:
           type: string
     Comment:
       required:
-      - article_id
+      - article
       - author
       - comment_id
       - published
@@ -151,10 +151,14 @@ components:
           type: string
           format: date-time
           example: 2021-08-30T09:12:33.001Z
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
       description: Single comment
     NewComment:
       required:
-      - article_id
+      - article
       - author
       - text
       type: object
@@ -172,14 +176,3 @@ components:
           type: string
           example: This article is the best thing I've ever read
       description: New comment
-    CommentTree:
-      required:
-      - comment
-      properties:
-        comment:
-          $ref: '#/components/schemas/Comment'
-        childs:
-          type: array
-          items:
-            $ref: '#/components/schemas/CommentTree'
-      description: A comment hierarchy
