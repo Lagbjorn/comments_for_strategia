@@ -8,7 +8,7 @@ from django.conf import settings
 class CommentSerializer(serializers.ModelSerializer):
     children = serializers.SerializerMethodField('get_children')
     article = serializers.PrimaryKeyRelatedField(queryset=Article.objects.all())
-    parent = serializers.PrimaryKeyRelatedField(queryset=Comment.objects.all())
+    parent = serializers.PrimaryKeyRelatedField(queryset=Comment.objects.all(), required=False)
 
     def get_children(self, comment):
         """
