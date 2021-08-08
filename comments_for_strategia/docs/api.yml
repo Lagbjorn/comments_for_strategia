@@ -1,0 +1,185 @@
+---
+openapi: 3.0.0
+info:
+  title: Simple Comment API
+  description: API allows to comment article and other comments as well as view articles and comments
+  version: 1.0.0
+servers:
+- url: /
+paths:
+  /api/v1/article/{article_id}:
+    get:
+      summary: get article with comments
+      parameters:
+      - name: article_id
+        in: path
+        description: article ID in database
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+      responses:
+        "200":
+          description: get article with nested comments up to depth of 3
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Article'
+        "404":
+          description: not found
+  /api/v1/article/:
+    post:
+      summary: adds an article
+      requestBody:
+        description: Article to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewArticle'
+      responses:
+        "201":
+          description: article created
+        "400":
+          description: input validation failed
+  /api/v1/comment/{comment_id}:
+    get:
+      summary: get a comment tree
+      description: get a comment tree starting from comment with specified id as root
+      parameters:
+      - name: comment_id
+        in: path
+        description: comment ID in database
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          format: uuid
+      responses:
+        "200":
+          description: comment tree existsa and returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentTree'
+        "404":
+          description: comment not found
+  /api/v1/comment/:
+    post:
+      summary: adds a comment
+      requestBody:
+        description: comment to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewComment'
+      responses:
+        "201":
+          description: comment posted
+        "400":
+          description: input validation failed
+components:
+  schemas:
+    Article:
+      required:
+      - comments
+      - article_id
+      - title
+      type: object
+      properties:
+        article_id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        author:
+          type: string
+        text:
+          type: string
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommentTree'
+        published:
+          type: string
+          format: date-time
+          example: 2021-08-30T09:12:33.001Z
+        edited:
+          type: string
+          format: date-time
+          example: 2021-08-30T09:15:43.001Z
+    NewArticle:
+      required:
+      - title
+      type: object
+      properties:
+        title:
+          type: string
+        author:
+          type: string
+        text:
+          type: string
+    Comment:
+      required:
+      - article_id
+      - author
+      - comment_id
+      - published
+      - text
+      type: object
+      properties:
+        comment_id:
+          type: string
+          format: uuid
+        article_id:
+          type: string
+          format: uuid
+        parent_id:
+          type: string
+          format: uuid
+        level:
+          type: integer
+        author:
+          type: string
+          example: Lagbjorn
+        text:
+          type: string
+          example: This article is the best thing I've ever read
+        published:
+          type: string
+          format: date-time
+          example: 2021-08-30T09:12:33.001Z
+      description: Single comment
+    NewComment:
+      required:
+      - article_id
+      - author
+      - text
+      type: object
+      properties:
+        article_id:
+          type: string
+          format: uuid
+        parent_id:
+          type: string
+          format: uuid
+        author:
+          type: string
+          example: Lagbjorn
+        text:
+          type: string
+          example: This article is the best thing I've ever read
+      description: New comment
+    CommentTree:
+      required:
+      - comment
+      properties:
+        comment:
+          $ref: '#/components/schemas/Comment'
+        childs:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommentTree'
+      description: A comment hierarchy

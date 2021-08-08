@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "*"
+django-mptt = "*"
+psycopg2 = "*"
+pydantic = "*"
+djangorestframework = "*"
+djangorestframework-recursive = "*"
+
+[dev-packages]
+django-debug-toolbar = "*"
+
+[requires]
+python_version = "3.9"
