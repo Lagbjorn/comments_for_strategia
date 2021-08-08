@@ -1,0 +1,87 @@
+[
+{
+  "model": "comments.article",
+  "pk": "dffcc27f-6b15-4d07-a016-1c079e5445cc",
+  "fields": {
+    "author": "Likbjorn",
+    "title": "Test Article",
+    "text": "This article is used to show how comments work",
+    "published": "2021-08-08T09:50:18.361Z"
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": "1ad902d5-9d31-41e0-88c7-574c440bd9d5",
+  "fields": {
+    "parent": "c00b652f-9a8d-4698-b94a-39567f1c0f1e",
+    "text": "Wow, such treelike, much comments",
+    "author": "Doge",
+    "article": "dffcc27f-6b15-4d07-a016-1c079e5445cc",
+    "published": "2021-08-08T09:54:19.516Z",
+    "lft": 8,
+    "rght": 9,
+    "tree_id": 1,
+    "level": 1
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": "6a252ca3-c10a-4909-be3b-59c8092d6d0f",
+  "fields": {
+    "parent": "e597dc9b-5863-4c8f-bc34-ec07b5ef4c71",
+    "text": "You just repeated yourself, don't do that again",
+    "author": "Grumpy man",
+    "article": "dffcc27f-6b15-4d07-a016-1c079e5445cc",
+    "published": "2021-08-08T09:55:44.978Z",
+    "lft": 3,
+    "rght": 6,
+    "tree_id": 1,
+    "level": 2
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": "c00b652f-9a8d-4698-b94a-39567f1c0f1e",
+  "fields": {
+    "parent": null,
+    "text": "Do you like the article?",
+    "author": "Likbjorn",
+    "article": "dffcc27f-6b15-4d07-a016-1c079e5445cc",
+    "published": "2021-08-08T09:52:15.938Z",
+    "lft": 1,
+    "rght": 10,
+    "tree_id": 1,
+    "level": 0
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": "d97d9d70-b1b1-4ded-a885-3ea1df1b43f6",
+  "fields": {
+    "parent": "6a252ca3-c10a-4909-be3b-59c8092d6d0f",
+    "text": "We need to go deeper",
+    "author": "DiCaprio",
+    "article": "dffcc27f-6b15-4d07-a016-1c079e5445cc",
+    "published": "2021-08-08T09:56:34.611Z",
+    "lft": 4,
+    "rght": 5,
+    "tree_id": 1,
+    "level": 3
+  }
+},
+{
+  "model": "comments.comment",
+  "pk": "e597dc9b-5863-4c8f-bc34-ec07b5ef4c71",
+  "fields": {
+    "parent": "c00b652f-9a8d-4698-b94a-39567f1c0f1e",
+    "text": "Do you like the article?",
+    "author": "Likbjorn",
+    "article": "dffcc27f-6b15-4d07-a016-1c079e5445cc",
+    "published": "2021-08-08T09:53:12.773Z",
+    "lft": 2,
+    "rght": 7,
+    "tree_id": 1,
+    "level": 1
+  }
+}
+]
